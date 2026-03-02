@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Martin Howard · SEH Ltd</title>
+<meta name="description" content="Martin Howard – Business Development, Suction Excavator Hire Ltd. Safe digging practices, vacuum excavation across the UK. Book a discovery call."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root {
+  --bg:       #0d0f0f;
+  --bg2:      #111414;
+  --surface:  #161919;
+  --orange:   #E8760A;
+  --orange-l: #F4934A;
+  --white:    #F2EEE8;
+  --muted:    rgba(242,238,232,0.45);
+  --line:     rgba(242,238,232,0.08);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#c {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px;
+  background: linear-gradient(to bottom, rgba(13,15,15,0.92) 0%, transparent 100%);
+}
+.logo {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.logo strong { color: var(--white); font-weight: 500; }
+.nav-link {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange-l);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(244,147,74,0.3);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav-link:hover { color: var(--white); border-color: var(--white); }
+
+/* ─ Hero ─ */
+#hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 130px 40px 100px;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange-l);
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: up 0.9s cubic-bezier(.22,1,.36,1) 0.2s forwards;
+}
+
+.hero-h1 {
+  font-family: 'DM Serif Display', serif;
+  font-weight: 400;
+  font-size: clamp(3.2rem, 10vw, 8rem);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  opacity: 0;
+  animation: up 1s cubic-bezier(.22,1,.36,1) 0.35s forwards;
+}
+.hero-h1 em {
+  font-style: italic;
+  color: var(--orange-l);
+  display: block;
+}
+
+.hero-sub {
+  margin-top: 16px;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  color: var(--muted);
+  opacity: 0;
+  animation: up 0.9s cubic-bezier(.22,1,.36,1) 0.55s forwards;
+}
+
+.hero-intro {
+  max-width: 540px;
+  margin: 48px auto 0;
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.9;
+  color: var(--muted);
+  opacity: 0;
+  animation: up 0.9s cubic-bezier(.22,1,.36,1) 0.7s forwards;
+}
+.hero-intro em {
+  font-style: italic;
+  color: rgba(242,238,232,0.75);
+  font-family: 'DM Serif Display', serif;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 52px;
+  opacity: 0;
+  animation: up 0.9s cubic-bezier(.22,1,.36,1) 0.88s forwards;
+}
+
+.btn-fill {
+  background: var(--orange);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  box-shadow: 0 0 40px rgba(232,118,10,0.2);
+}
+.btn-fill:hover { background: var(--orange-l); transform: translateY(-2px); box-shadow: 0 0 70px rgba(232,118,10,0.35); }
+
+.btn-ghost {
+  background: transparent;
+  color: rgba(242,238,232,0.6);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 15px 36px;
+  text-decoration: none;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  transition: border-color 0.25s, color 0.25s, transform 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(242,238,232,0.25); color: var(--white); transform: translateY(-2px); }
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: up 0.7s ease 1.5s forwards;
+}
+.scroll-indicator span {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.scroll-line-v {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--orange), transparent);
+  animation: pulse 2.2s ease infinite;
+}
+
+/* ─ Divider ─ */
+.hr {
+  position: relative;
+  z-index: 1;
+  height: 1px;
+  background: var(--line);
+  margin: 0 48px;
+}
+.hr::after {
+  content:'';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 14px var(--orange);
+}
+
+/* ─ Sections ─ */
+.section {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 96px 48px;
+}
+.section.center { text-align: center; }
+
+.eyebrow {
+  font-size: 0.67rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 52px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: '';
+  height: 1px;
+  background: rgba(232,118,10,0.25);
+  flex: 1;
+}
+
+.prose {
+  font-family: 'DM Serif Display', serif;
+  font-weight: 400;
+  font-size: clamp(1.45rem, 2.8vw, 2rem);
+  line-height: 1.55;
+  color: var(--white);
+}
+.prose em { font-style: italic; color: var(--orange-l); }
+.prose .soft { font-style: italic; color: var(--muted); }
+
+/* ─ Pillars ─ */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 64px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+@media(max-width:660px){ .pillars { grid-template-columns: 1fr; } }
+.pillar {
+  background: var(--bg2);
+  padding: 44px 32px;
+  transition: background 0.3s;
+  text-align: left;
+}
+.pillar:hover { background: var(--surface); }
+.p-num {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 2rem;
+  color: rgba(232,118,10,0.18);
+  margin-bottom: 20px;
+  line-height: 1;
+}
+.pillar h3 {
+  font-family: 'DM Serif Display', serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.pillar p {
+  font-size: 0.88rem;
+  line-height: 1.72;
+  color: var(--muted);
+}
+
+/* ─ Accreditations ─ */
+.accred-wrap {
+  position: relative;
+  z-index: 1;
+  background: var(--surface);
+  padding: 80px 48px;
+}
+.accred-inner { max-width: 860px; margin: 0 auto; }
+.accred-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tag {
+  font-size: 0.76rem;
+  letter-spacing: 0.07em;
+  color: rgba(242,238,232,0.5);
+  border: 1px solid var(--line);
+  padding: 9px 20px;
+  border-radius: 100px;
+  transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.tag:hover { border-color: rgba(232,118,10,0.35); color: var(--orange-l); box-shadow: 0 0 20px rgba(232,118,10,0.07); }
+
+/* ─ Commitments ─ */
+.commits { display: flex; flex-direction: column; }
+.commit {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 24px;
+  align-items: start;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding-left 0.4s cubic-bezier(.22,1,.36,1);
+  cursor: default;
+}
+.commit:first-child { border-top: 1px solid var(--line); }
+.commit:hover { padding-left: 8px; }
+.c-num {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--orange);
+  padding-top: 5px;
+}
+.commit h4 {
+  font-family: 'DM Serif Display', serif;
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.commit p {
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+/* ─ Engage ─ */
+.engage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media(max-width:600px){ .engage-grid { grid-template-columns: 1fr; } }
+.e-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 44px 34px;
+  text-decoration: none;
+  display: block;
+  transition: border-color 0.3s, transform 0.35s, box-shadow 0.35s;
+  position: relative;
+  overflow: hidden;
+}
+.e-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--orange), transparent);
+  transform: scaleX(0);
+  transition: transform 0.45s ease;
+}
+.e-card:hover { border-color: rgba(232,118,10,0.18); transform: translateY(-5px); box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 50px rgba(232,118,10,0.05); }
+.e-card:hover::after { transform: scaleX(1); }
+.e-icon {
+  font-size: 1.1rem;
+  margin-bottom: 22px;
+  color: rgba(232,118,10,0.5);
+}
+.e-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.e-card p {
+  font-size: 0.87rem;
+  line-height: 1.75;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.e-action {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange-l);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.25s;
+}
+.e-card:hover .e-action { gap: 14px; }
+
+/* ─ Contact ─ */
+#contact { position: relative; z-index: 1; border-top: 1px solid var(--line); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+}
+@media(max-width:680px){ .contact-grid { grid-template-columns: 1fr 1fr; } }
+.c-item {
+  padding: 48px 32px;
+  border-right: 1px solid var(--line);
+  text-decoration: none;
+  display: block;
+  transition: background 0.25s;
+}
+.c-item:last-child { border-right: none; }
+.c-item:hover { background: var(--surface); }
+.c-item:hover .c-val { color: var(--orange-l); }
+.c-label {
+  font-size: 0.63rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.c-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1rem;
+  color: var(--white);
+  transition: color 0.25s;
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 36px 32px;
+}
+footer p {
+  font-size: 0.73rem;
+  letter-spacing: 0.06em;
+  color: rgba(242,238,232,0.2);
+}
+footer a { color: rgba(232,118,10,0.45); text-decoration: none; transition: color 0.2s; }
+footer a:hover { color: var(--orange-l); }
+
+/* ─ Keyframes ─ */
+@keyframes up {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes pulse {
+  0%,100% { opacity:1; }
+  50%      { opacity:0.25; }
+}
+
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (hover: hover) and (pointer: fine) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.85s cubic-bezier(.22,1,.36,1), transform 0.85s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.in { opacity:1; transform:translateY(0); }
+  .d1{transition-delay:.07s} .d2{transition-delay:.15s} .d3{transition-delay:.23s} .d4{transition-delay:.31s}
+}
+
+@media(max-width:600px){
+  nav { padding: 18px 24px; }
+  .section { padding: 72px 24px; }
+  .accred-wrap { padding: 64px 24px; }
+  .c-item { padding: 32px 20px; }
+  .hr { margin: 0 24px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+
+<nav>
+  <div class="logo"><strong>SEH</strong> · Suction Excavator Hire</div>
+  <a class="nav-link" href="tel:07702777071">07702 777 071</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Business Development Executive · SEH Ltd</div>
+  <h1 class="hero-h1">
+    Martin
+    <em>Howard</em>
+  </h1>
+  <p class="hero-sub">Safer ground. Smarter excavation.</p>
+  <p class="hero-intro">
+    I work with contractors and project teams across the UK to
+    <em>champion safe digging practices</em>
+    — bringing vacuum excavation to the projects where it matters most.
+    <br><br>
+    <em>Let's talk about your next dig.</em>
+  </p>
+  <div class="hero-ctas">
+    <a class="btn-fill" href="https://meetings.hubspot.com/martin-howard1/conroys" target="_blank">Book a Discovery Call</a>
+    <a class="btn-ghost" href="https://sehltd.com" target="_blank">Explore SEH Ltd ↗</a>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line-v"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ABOUT -->
+<section class="section center reveal">
+  <div class="eyebrow">Who I Am</div>
+  <p class="prose">
+    I believe every excavation should begin with
+    <em>the right question</em> — not just the right machine.
+    <span class="soft"> I'm here to understand your project, your pressures, and your ground.</span>
+  </p>
+  <div class="pillars">
+    <div class="pillar reveal d1">
+      <div class="p-num">01</div>
+      <h3>Safe Digging First</h3>
+      <p>Protecting people and infrastructure underground is non-negotiable. I bring that conversation to every project, before anything else.</p>
+    </div>
+    <div class="pillar reveal d2">
+      <div class="p-num">02</div>
+      <h3>Vacuum Excavation</h3>
+      <p>Non-destructive, precise, and dramatically safer than traditional methods. I'll show you exactly where it adds value for your team.</p>
+    </div>
+    <div class="pillar reveal d3">
+      <div class="p-num">03</div>
+      <h3>Nationwide Reach</h3>
+      <p>Hampshire, Lincolnshire, Warwickshire — and everywhere between. The SEH fleet deploys wherever your project takes you.</p>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ACCREDITATIONS -->
+<div class="accred-wrap">
+  <div class="accred-inner">
+    <div class="eyebrow reveal">Accreditations &amp; Standards</div>
+    <div class="accred-tags reveal d1">
+      <span class="tag">ISO 9001 Quality</span>
+      <span class="tag">ISO 14001 Environmental</span>
+      <span class="tag">ISO 45001 Health &amp; Safety</span>
+      <span class="tag">Constructionline Gold</span>
+      <span class="tag">PQS SSIP</span>
+      <span class="tag">UVDB Qualified</span>
+      <span class="tag">UVDB Audited</span>
+      <span class="tag">Mates in Mind</span>
+      <span class="tag">20+ Years UK Pioneer</span>
+    </div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- COMMITMENTS -->
+<section class="section reveal">
+  <div class="eyebrow">My Commitments</div>
+  <div class="commits">
+    <div class="commit reveal d1">
+      <span class="c-num">i.</span>
+      <div>
+        <h4>Education before everything</h4>
+        <p>Understanding safe digging comes first. The right hire decision follows naturally when you know the ground rules.</p>
+      </div>
+    </div>
+    <div class="commit reveal d2">
+      <span class="c-num">ii.</span>
+      <div>
+        <h4>Honest, practical advice</h4>
+        <p>No oversell. I'll tell you plainly where vacuum excavation is the right call — and where it isn't.</p>
+      </div>
+    </div>
+    <div class="commit reveal d3">
+      <span class="c-num">iii.</span>
+      <div>
+        <h4>On-site, not just on-call</h4>
+        <p>I enjoy getting to site. A visit before hire, a check-in mid-project — I bring SEH to you, in person.</p>
+      </div>
+    </div>
+    <div class="commit reveal d4">
+      <span class="c-num">iv.</span>
+      <div>
+        <h4>Relationships over transactions</h4>
+        <p>One hire is a good start. Becoming your trusted excavation partner on every complex dig is what I'm building with you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ENGAGE -->
+<section class="section reveal">
+  <div class="eyebrow">Let's Connect</div>
+  <div class="engage-grid">
+    <a class="e-card" href="https://meetings.hubspot.com/martin-howard1/conroys" target="_blank">
+      <div class="e-icon">◎</div>
+      <h3>Discovery Call</h3>
+      <p>Got a project or just curious about suction excavation? Let's have a proper conversation — no pitch, just genuine insight for your situation.</p>
+      <div class="e-action">Book now <span>→</span></div>
+    </a>
+    <a class="e-card" href="mailto:martin@sehltd.com?subject=Site Visit Request">
+      <div class="e-icon">◈</div>
+      <h3>Hire Site Visit</h3>
+      <p>See the equipment working in your environment. I'll arrange a demo or site visit at your convenience, anywhere in the UK.</p>
+      <div class="e-action">Arrange a visit <span>→</span></div>
+    </a>
+    <a class="e-card" href="https://www.linkedin.com/in/martin-howard-a359752a8/" target="_blank">
+      <div class="e-icon">◇</div>
+      <h3>LinkedIn</h3>
+      <p>Follow along for safe digging insights, industry updates and the latest from SEH Ltd and the Conroy Group.</p>
+      <div class="e-action">View profile <span>↗</span></div>
+    </a>
+    <a class="e-card" href="https://sehltd.com" target="_blank">
+      <div class="e-icon">◉</div>
+      <h3>SEH Ltd Website</h3>
+      <p>Fleet, sectors, accreditations and 20+ years of suction excavation expertise — everything behind the team supporting me.</p>
+      <div class="e-action">Visit sehltd.com <span>↗</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT STRIP -->
+<div id="contact">
+  <div class="contact-grid">
+    <a class="c-item" href="mailto:martin@sehltd.com">
+      <div class="c-label">Email</div>
+      <div class="c-val">martin@sehltd.com</div>
+    </a>
+    <a class="c-item" href="tel:07702777071">
+      <div class="c-label">Mobile</div>
+      <div class="c-val">07702 777 071</div>
+    </a>
+    <a class="c-item" href="https://www.linkedin.com/in/martin-howard-a359752a8/" target="_blank">
+      <div class="c-label">LinkedIn</div>
+      <div class="c-val">Martin Howard</div>
+    </a>
+    <a class="c-item" href="https://sehltd.com" target="_blank">
+      <div class="c-label">Website</div>
+      <div class="c-val">sehltd.com</div>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <p>Martin Howard · Business Development Executive ·
+    <a href="https://sehltd.com" target="_blank">Suction Excavator Hire Ltd</a>
+  </p>
+</footer>
+
+<script>
+/* ── Three.js: gentle drifting dust, orange warmth ── */
+(function(){
+  const canvas = document.getElementById('c');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 0.1, 200);
+  camera.position.z = 70;
+
+  // Sparse, slow dust
+  const N = 500;
+  const pos = new Float32Array(N*3);
+  const col = new Float32Array(N*3);
+  const spd = new Float32Array(N);
+
+  for(let i=0;i<N;i++){
+    pos[i*3]   = (Math.random()-0.5)*180;
+    pos[i*3+1] = (Math.random()-0.5)*130;
+    pos[i*3+2] = (Math.random()-0.5)*60;
+    spd[i] = 0.015 + Math.random()*0.025;
+    if(Math.random() > 0.72){
+      col[i*3]=0.91; col[i*3+1]=0.46; col[i*3+2]=0.04; // orange
+    } else {
+      const v = 0.1 + Math.random()*0.12;
+      col[i*3]=v; col[i*3+1]=v; col[i*3+2]=v; // near-black grey
+    }
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col,3));
+  const mat = new THREE.PointsMaterial({
+    size: 0.45,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.5,
+    sizeAttenuation: true,
+  });
+  const pts = new THREE.Points(geo, mat);
+  scene.add(pts);
+
+  let mx=0, my=0;
+  window.addEventListener('mousemove', e=>{
+    mx = (e.clientX/window.innerWidth  - 0.5);
+    my = (e.clientY/window.innerHeight - 0.5);
+  });
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  let t = 0;
+  const pa = geo.attributes.position.array;
+  function frame(){
+    requestAnimationFrame(frame);
+    t += 0.001;
+    for(let i=0;i<N;i++){
+      pa[i*3+1] += spd[i] * 0.018;
+      if(pa[i*3+1] > 65) pa[i*3+1] = -65;
+    }
+    geo.attributes.position.needsUpdate = true;
+    pts.rotation.y = t*0.05 + mx*0.04;
+    pts.rotation.x = my*0.02;
+    renderer.render(scene, camera);
+  }
+  frame();
+})();
+
+/* ── Scroll reveals ── */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  // Fallback: if IntersectionObserver not supported or fails, show everything
+  function showAll(){ els.forEach(el=>el.classList.add('in')); }
+  try {
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+    },{ threshold: 0, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el=>io.observe(el));
+    // Safety net: after 2s reveal anything still hidden (e.g. paint timing issues on mobile)
+    setTimeout(showAll, 2000);
+  } catch(err){ showAll(); }
+})();
+</script>
+</body>
+</html>
