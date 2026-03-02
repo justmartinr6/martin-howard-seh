@@ -71,6 +71,64 @@ nav {
 }
 .nav-link:hover { color: var(--white); border-color: var(--white); }
 
+/*Style Block */
+
+* ── Profile Photo · Warm Glow ── */
+.profile-frame {
+  position: relative;
+  display: inline-block;
+  width: 220px;
+  height: 264px;
+  margin: 40px auto 0;
+}
+.photo-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%;
+  display: block;
+  filter: contrast(1.08) saturate(1.15) sepia(0.18) brightness(0.93);
+  transition: filter 0.4s ease;
+}
+.profile-photo:hover {
+  filter: contrast(1.05) saturate(1.2) sepia(0.1) brightness(1.0);
+}
+.photo-vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(13,15,15,0.65) 100%);
+  pointer-events: none; z-index: 2;
+}
+.photo-warm {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(232,118,10,0.14) 0%, rgba(180,60,0,0.2) 100%);
+  mix-blend-mode: screen;
+  pointer-events: none; z-index: 3;
+}
+.photo-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px;
+  opacity: 0.04; mix-blend-mode: overlay;
+  pointer-events: none; z-index: 4;
+}
+.photo-glow {
+  position: absolute; inset: -1px;
+  border-radius: 4px;
+  border: 1px solid rgba(232,118,10,0.35);
+  box-shadow:
+    0 0 0 1px rgba(232,118,10,0.15),
+    0 0 40px rgba(232,118,10,0.2),
+    0 0 80px rgba(232,118,10,0.08);
+  pointer-events: none; z-index: 10;
+}
+
 /* ─ Hero ─ */
 #hero {
   position: relative;
@@ -201,63 +259,7 @@ nav {
   background: linear-gradient(to bottom, var(--orange), transparent);
   animation: pulse 2.2s ease infinite;
 }
-  
-/* ── Profile Photo ── */
-.profile-frame {
-  position: relative;
-  display: inline-block;
-  width: 220px;
-  height: 264px;
-  margin: 40px auto 0;
-}
-.photo-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 3px;
-  overflow: hidden;
-}
-.profile-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 12%;
-  display: block;
-  filter: contrast(1.08) saturate(1.15) sepia(0.18) brightness(0.93);
-  transition: filter 0.4s ease;
-}
-.profile-photo:hover {
-  filter: contrast(1.05) saturate(1.2) sepia(0.1) brightness(1.0);
-}
-.photo-vignette {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(13,15,15,0.65) 100%);
-  pointer-events: none; z-index: 2;
-}
-.photo-warm {
-  position: absolute; inset: 0;
-  background: linear-gradient(160deg, rgba(232,118,10,0.14) 0%, rgba(180,60,0,0.2) 100%);
-  mix-blend-mode: screen;
-  pointer-events: none; z-index: 3;
-}
-.photo-grain {
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size: 180px;
-  opacity: 0.04; mix-blend-mode: overlay;
-  pointer-events: none; z-index: 4;
-}
-.photo-glow {
-  position: absolute; inset: -1px;
-  border-radius: 4px;
-  border: 1px solid rgba(232,118,10,0.35);
-  box-shadow:
-    0 0 0 1px rgba(232,118,10,0.15),
-    0 0 40px rgba(232,118,10,0.2),
-    0 0 80px rgba(232,118,10,0.08);
-  pointer-events: none; z-index: 10;
-}
-  
+
 /* ─ Divider ─ */
 .hr {
   position: relative;
@@ -561,30 +563,26 @@ footer a:hover { color: var(--orange-l); }
 <!-- HERO -->
 <section id="hero">
   <div class="hero-eyebrow">Business Development Executive · SEH Ltd</div>
-  <div style="display:flex;justify-content:center;">
   <div class="profile-frame">
-    <div class="photo-glow"></div>
-    <div class="photo-wrap">
-      <img class="profile-photo"
-           src="martin-howard.jpg"
-           alt="Martin Howard · SEH Ltd">
-      <div class="photo-vignette"></div>
-      <div class="photo-warm"></div>
-      <div class="photo-grain"></div>
-    </div>
+  <div class="border-frame"></div>
+  <div class="photo-wrap">
+    <div class="overlay-vignette"></div>
+    <img class="profile-photo"
+         src="martin-howard.jpg"
+         alt="Martin Howard">
   </div>
 </div>
   <h1 class="hero-h1">
     Martin
     <em>Howard</em>
   </h1>
-  <p class="hero-sub">Safer ground. Smarter excavation.</p>
+  <p class="hero-sub">Safe working. Smarter excavation.</p>
   <p class="hero-intro">
     I work with contractors and project teams across the UK to
     <em>champion safe digging practices</em>
-    — bringing vacuum excavation to the projects where it matters most.
+     and bringing Suction excavation to the projects where it matters most.
     <br><br>
-    <em>Let's talk about your next dig.</em>
+    <em>Let's talk about your next project.</em>
   </p>
   <div class="hero-ctas">
     <a class="btn-fill" href="https://meetings.hubspot.com/martin-howard1/conroys" target="_blank">Book a Discovery Call</a>
@@ -600,10 +598,10 @@ footer a:hover { color: var(--orange-l); }
 
 <!-- ABOUT -->
 <section class="section center reveal">
-  <div class="eyebrow">Who I Am</div>
+  <div class="eyebrow">My Ethos</div>
   <p class="prose">
     I believe every excavation should begin with
-    <em>the right question</em> — not just the right machine.
+    <em>the right mindset</em> not just the right machine.
     <span class="soft"> I'm here to understand your project, your pressures, and your ground.</span>
   </p>
   <div class="pillars">
@@ -614,13 +612,13 @@ footer a:hover { color: var(--orange-l); }
     </div>
     <div class="pillar reveal d2">
       <div class="p-num">02</div>
-      <h3>Vacuum Excavation</h3>
-      <p>Non-destructive, precise, and dramatically safer than traditional methods. I'll show you exactly where it adds value for your team.</p>
+      <h3>Suction Excavation</h3>
+      <p>Non-destructive, precise, and dramatically safer than traditional methods. Let's explore exactly where it adds value for your team.</p>
     </div>
     <div class="pillar reveal d3">
       <div class="p-num">03</div>
       <h3>Nationwide Reach</h3>
-      <p>Hampshire, Lincolnshire, Warwickshire — and everywhere between. The SEH fleet deploys wherever your project takes you.</p>
+      <p>Hampshire, Lincolnshire, Warwickshire and everywhere between. The SEH fleet consists of over 25 units and still growing to meet our clients needs.</p>
     </div>
   </div>
 </section>
@@ -662,14 +660,14 @@ footer a:hover { color: var(--orange-l); }
       <span class="c-num">ii.</span>
       <div>
         <h4>Honest, practical advice</h4>
-        <p>No oversell. I'll tell you plainly where vacuum excavation is the right call — and where it isn't.</p>
+        <p>No oversell. I'll tell you plainly where vacuum excavation is the right call and where it isn't.</p>
       </div>
     </div>
     <div class="commit reveal d3">
       <span class="c-num">iii.</span>
       <div>
         <h4>On-site, not just on-call</h4>
-        <p>I enjoy getting to site. A visit before hire, a check-in mid-project — I bring SEH to you, in person.</p>
+        <p>I enjoy getting to site. A visit before hire, a check-in mid-project. I bring SEH to you, in person.</p>
       </div>
     </div>
     <div class="commit reveal d4">
@@ -691,7 +689,7 @@ footer a:hover { color: var(--orange-l); }
     <a class="e-card" href="https://meetings.hubspot.com/martin-howard1/conroys" target="_blank">
       <div class="e-icon">◎</div>
       <h3>Discovery Call</h3>
-      <p>Got a project or just curious about suction excavation? Let's have a proper conversation — no pitch, just genuine insight for your situation.</p>
+      <p>Got a project or curious about Suction excavation? Let's have a chat; just genuine insight for your situation.</p>
       <div class="e-action">Book now <span>→</span></div>
     </a>
     <a class="e-card" href="mailto:martin@sehltd.com?subject=Site Visit Request">
@@ -709,7 +707,7 @@ footer a:hover { color: var(--orange-l); }
     <a class="e-card" href="https://sehltd.com" target="_blank">
       <div class="e-icon">◉</div>
       <h3>SEH Ltd Website</h3>
-      <p>Fleet, sectors, accreditations and 20+ years of suction excavation expertise — everything behind the team supporting me.</p>
+      <p>Fleet, sectors, accreditations and 20+ years of suction excavation expertise, the momentum and credibility behind the team supporting me.</p>
       <div class="e-action">Visit sehltd.com <span>↗</span></div>
     </a>
   </div>
@@ -720,11 +718,11 @@ footer a:hover { color: var(--orange-l); }
   <div class="contact-grid">
     <a class="c-item" href="mailto:martin@sehltd.com">
       <div class="c-label">Email</div>
-      <div class="c-val">martin@sehltd.com</div>
+      <div class="c-val">martin.howard@sehltd.com</div>
     </a>
     <a class="c-item" href="tel:07702777071">
       <div class="c-label">Mobile</div>
-      <div class="c-val">07702 777 071</div>
+      <div class="c-val">07702777071</div>
     </a>
     <a class="c-item" href="https://www.linkedin.com/in/martin-howard-a359752a8/" target="_blank">
       <div class="c-label">LinkedIn</div>
