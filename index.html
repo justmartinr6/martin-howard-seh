@@ -73,7 +73,7 @@ nav {
 
 /*Style Block */
 
-* ── Profile Photo · Warm Glow ── */
+/* ── Profile Photo · Warm Glow ── */
 .profile-frame {
   position: relative;
   display: inline-block;
@@ -563,14 +563,19 @@ footer a:hover { color: var(--orange-l); }
 <!-- HERO -->
 <section id="hero">
   <div class="hero-eyebrow">Business Development Executive · SEH Ltd</div>
+<div style="display:flex;justify-content:center;">
   <div class="profile-frame">
-  <div class="border-frame"></div>
-  <div class="photo-wrap">
-    <div class="overlay-vignette"></div>
-    <img class="profile-photo"
-         src="martin-howard.jpg"
-         alt="Martin Howard">
+    <div class="photo-glow"></div>
+    <div class="photo-wrap">
+      <img class="profile-photo"
+           src="martin-howard.jpg"
+           alt="Martin Howard · SEH Ltd">
+      <div class="photo-vignette"></div>
+      <div class="photo-warm"></div>
+      <div class="photo-grain"></div>
+    </div>
   </div>
+</div>
 </div>
   <h1 class="hero-h1">
     Martin
